@@ -12,6 +12,16 @@
   "bugs": {
     "url": "https://github.com/breeg554/react-cron-picker/issues"
   },
+  "keywords": [
+    "react",
+    "hook",
+    "cron",
+    "cron-expressions",
+    "cron-scheduler",
+    "scheduler expression",
+    "cron-picker",
+    "picker"
+  ],
   "license": "MIT",
   "type": "module",
   "source": "src/index.ts",
