@@ -3,13 +3,13 @@ import {
   CronPickerLabel,
   CronPickerInput,
 } from './components/CronPicker.components.tsx';
-import type {
+import {
   CronPickerTimeOption,
   CronPickerHoursSelector,
   CronPickerMinutesSelector,
 } from './components/CronPickerTime.tsx';
 
-import {
+import type {
   CronPickerTimeProps,
   CronPickerTimeOptionProps,
   CronPickerContextProps,

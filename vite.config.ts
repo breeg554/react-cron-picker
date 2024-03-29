@@ -16,5 +16,5 @@ export default defineConfig({
       external: ['react', 'react-dom'],
     },
   },
-  plugins: [react(), tsconfigPaths(), dts()],
+  plugins: [react(), tsconfigPaths(), dts({ exclude: ['src/stories/*'] })],
 });
