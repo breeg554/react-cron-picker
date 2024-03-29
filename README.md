@@ -17,7 +17,7 @@ npm install react-cron-picker
 
 ## Getting Started
 
-#### Basic usage - [See live example](https://breeg554.github.io/react-cron-picker)
+#### Basic usage - [See live example](https://breeg554.github.io/react-cron-picker/?path=/story/cronpicker--simple)
 
 ```tsx
 export const CronPickerComponent = () => {
