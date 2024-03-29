@@ -1,10 +1,26 @@
 import React, { useMemo } from 'react';
 import { useCronPicker } from '~components/CronPicker.tsx';
-import { CronPickerTimeProps } from '~components/types.ts';
+import {
+  CronPickerTimeOptionProps,
+  CronPickerTimeProps,
+} from '~components/types.ts';
 
-export const CronPickerHoursSelector: React.FC<CronPickerTimeProps> = (
-  props,
-) => {
+export const CronPickerTimeOption: React.FC<CronPickerTimeOptionProps> = ({
+  value,
+  label,
+  ...rest
+}) => {
+  return (
+    <option value={value} {...rest}>
+      {label}
+    </option>
+  );
+};
+
+export const CronPickerHoursSelector: React.FC<CronPickerTimeProps> = ({
+  renderOption = CronPickerTimeOption,
+  ...rest
+}) => {
   const { onDateChange, date } = useCronPicker();
 
   const handleOnHoursChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -27,20 +43,24 @@ export const CronPickerHoursSelector: React.FC<CronPickerTimeProps> = (
       name="hours"
       value={date.toISOString()}
       onChange={handleOnHoursChange}
-      {...props}
+      {...rest}
     >
       {dates.map((date) => (
-        <option key={date.getTime()} value={date.toISOString()}>
-          {date.getHours().toString().padStart(2, '0')}
-        </option>
+        <React.Fragment key={date.getTime()}>
+          {renderOption({
+            value: date.toISOString(),
+            label: date.getHours().toString().padStart(2, '0'),
+          })}
+        </React.Fragment>
       ))}
     </select>
   );
 };
 
-export const CronPickerMinutesSelector: React.FC<CronPickerTimeProps> = (
-  props,
-) => {
+export const CronPickerMinutesSelector: React.FC<CronPickerTimeProps> = ({
+  renderOption = CronPickerTimeOption,
+  ...rest
+}) => {
   const { onDateChange, date } = useCronPicker();
 
   const handleOnMinutesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -63,12 +83,15 @@ export const CronPickerMinutesSelector: React.FC<CronPickerTimeProps> = (
       name="minutes"
       value={date.toISOString()}
       onChange={handleOnMinutesChange}
-      {...props}
+      {...rest}
     >
       {dates.map((date) => (
-        <option key={date.getTime()} value={date.toISOString()}>
-          {date.getMinutes().toString().padStart(2, '0')}
-        </option>
+        <React.Fragment key={date.getTime()}>
+          {renderOption({
+            value: date.toISOString(),
+            label: date.getMinutes().toString().padStart(2, '0'),
+          })}
+        </React.Fragment>
       ))}
     </select>
   );

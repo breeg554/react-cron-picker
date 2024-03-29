@@ -28,8 +28,22 @@ export interface CronPickerContextProps {
   onDateChange: (date: Date) => void;
 }
 
+export type CronPickerTimeOptionArgs = {
+  value: string;
+  label: ReactNode;
+};
+
 export interface CronPickerTimeProps
   extends Omit<
     React.SelectHTMLAttributes<HTMLSelectElement>,
     'name' | 'value' | 'onChange'
-  > {}
+  > {
+  renderOption?: (args: CronPickerTimeOptionArgs) => ReactNode;
+}
+
+export interface CronPickerTimeOptionProps
+  extends CronPickerTimeOptionArgs,
+    Omit<React.OptionHTMLAttributes<HTMLOptionElement>, 'value' | 'label'> {
+  value: string;
+  label: ReactNode;
+}
