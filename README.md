@@ -25,7 +25,7 @@ export const CronPickerComponent = () => {
 
   return (
     <>
-      <CronPicker name="cron" value={current} onChange={setCurrent}>
+      <CronPicker name="cron" value={current} onChange={setCurrent} offset={new Date().getTimezoneOffset()}>
         <CronPickerInputWrapper>
           <CronPickerLabel defaultValue="2 2 * * FRI" label="Only on Friday">
             <CronPickerInput />

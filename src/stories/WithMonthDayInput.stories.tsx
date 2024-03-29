@@ -1,26 +1,26 @@
 import { useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { CronPicker } from '~components/CronPicker.tsx';
 import {
-  CronPicker,
   CronPickerInput,
+  CronPickerInputWrapper,
   CronPickerLabel,
+  CronPickerMonthDayInput,
+} from '~components/CronPickerInputs.tsx';
+import {
   CronPickerHoursSelect,
   CronPickerMinutesSelect,
   CronPickerTimeWrapper,
-  CronPickerInputWrapper,
-  CronPickerMonthDayInput,
-} from '../index.ts';
+} from '~components/CronPickerTime.tsx';
+import '../main.css';
 
-export const CronPickerComponent = () => {
+const CronPickerComponent = () => {
   const [current, setCurrent] = useState('2 4 * * 5#3');
 
   return (
-    <div style={{ minWidth: '200px', fontFamily: 'sans-serif' }}>
+    <>
       <CronPicker name="cron" value={current} onChange={setCurrent}>
         <CronPickerInputWrapper>
-          <CronPickerLabel defaultValue="2 2 * * FRI" label="Only on Friday">
-            <CronPickerInput />
-          </CronPickerLabel>
-
           <CronPickerLabel
             defaultValue="0 0 1 * *"
             label={
@@ -47,6 +47,19 @@ export const CronPickerComponent = () => {
       </CronPicker>
 
       <p>cron expression: {current}</p>
-    </div>
+    </>
   );
 };
+
+const meta = {
+  title: 'CronPicker',
+  component: CronPickerComponent,
+  parameters: {
+    layout: 'centered',
+  },
+} satisfies Meta<typeof CronPickerComponent>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const WithMonthDayInput: Story = {};

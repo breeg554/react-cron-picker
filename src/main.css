@@ -1,3 +1,7 @@
+.cron-picker {
+    font-family: sans-serif;
+}
+
 .cron-picker-input-wrapper {
     display: flex;
     flex-direction: column;
@@ -11,6 +15,7 @@
 
 .cron-picker-label {
     display: flex;
+    align-items: center;
     gap: 6px;
     padding: 10px;
     border-radius: 4px;
