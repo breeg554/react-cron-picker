@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { HTMLProps, ReactNode } from 'react';
 
 export interface CronPickerProps
   extends Omit<React.HTMLProps<HTMLDivElement>, 'onChange' | 'name'> {
@@ -19,6 +19,9 @@ export interface CronPickerLabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement> {
   label: ReactNode;
 }
+
+export interface CronPickerInputWrapperProps
+  extends HTMLProps<HTMLDivElement> {}
 
 export interface CronPickerContextProps {
   name: string;
@@ -47,3 +50,5 @@ export interface CronPickerTimeOptionProps
   value: string;
   label: ReactNode;
 }
+
+export interface CronPickerTimeWrapperProps extends HTMLProps<HTMLDivElement> {}

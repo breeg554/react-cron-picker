@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CronPickerComponent } from './CronPicker.tsx';
+import '../main.css';
 
 const meta = {
-  title: 'Example/CronPicker',
+  title: 'CronPicker',
   component: CronPickerComponent,
   parameters: {
     layout: 'centered',
@@ -12,4 +13,4 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Sample: Story = {};
+export const Basic: Story = {};

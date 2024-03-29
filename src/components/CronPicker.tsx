@@ -1,10 +1,11 @@
 import React, { PropsWithChildren, useState } from 'react';
+import { clsx } from 'clsx';
 import { CronPickerContextProps, CronPickerProps } from './types.ts';
 import {
   extractDateFromCron,
   isValidCron,
   updateDateInCron,
-} from '~components/CronPicker.helpers.ts';
+} from './CronPicker.helpers.ts';
 
 const CronPickerContext = React.createContext<CronPickerContextProps>(
   undefined!,
@@ -15,6 +16,7 @@ export const CronPicker: React.FC<PropsWithChildren<CronPickerProps>> = ({
   name,
   value,
   onChange,
+  className,
   ...rest
 }) => {
   if (!isValidCron(value)) throw new Error(`Invalid cron expression: ${value}`);
@@ -41,7 +43,9 @@ export const CronPicker: React.FC<PropsWithChildren<CronPickerProps>> = ({
         date,
       }}
     >
-      <div {...rest}>{children}</div>
+      <div className={clsx('cron-picker', className)} {...rest}>
+        {children}
+      </div>
     </CronPickerContext.Provider>
   );
 };

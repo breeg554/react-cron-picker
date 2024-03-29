@@ -9,22 +9,27 @@
   "files": [
     "dist"
   ],
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./main.css": "./dist/main.css"
   },
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "npm-preview": "npm pack --dry-run"
+  },
+  "dependencies": {
+    "clsx": "^2.1.0"
   },
   "peerDependencies": {
     "react": "^18.2.0",
@@ -55,6 +60,7 @@
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-dts": "^3.8.1",
+    "vite-plugin-static-copy": "^1.0.2",
     "vite-tsconfig-paths": "^4.3.2"
   },
   "packageManager": "pnpm@8.6.12+sha256.3ed40ffc6cbb00790ab325e9d3ff5517a3ed5b763ec53a411707b1702a411174"

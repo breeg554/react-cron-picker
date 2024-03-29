@@ -1,11 +1,17 @@
 import React, { PropsWithChildren } from 'react';
-import { CronPickerInputProps, CronPickerLabelProps } from './types.ts';
-import { useCronPicker } from './CronPicker.tsx';
+import { clsx } from 'clsx';
+import {
+  CronPickerInputProps,
+  CronPickerInputWrapperProps,
+  CronPickerLabelProps,
+} from './types.ts';
 import { updateDateInCron } from './CronPicker.helpers.ts';
+import { useCronPicker } from './CronPicker.tsx';
 
 export const CronPickerInput: React.FC<CronPickerInputProps> = ({
   defaultValue,
   onChange,
+  className,
   ...rest
 }) => {
   const { name, checked, onCheck, date } = useCronPicker();
@@ -23,6 +29,7 @@ export const CronPickerInput: React.FC<CronPickerInputProps> = ({
       name={name}
       checked={isChecked}
       onChange={handleOnCheck}
+      className={clsx('cron-picker-input', className)}
       {...rest}
     />
   );
@@ -30,12 +37,24 @@ export const CronPickerInput: React.FC<CronPickerInputProps> = ({
 
 export const CronPickerLabel: React.FC<
   PropsWithChildren<CronPickerLabelProps>
-> = ({ children, label, ...rest }) => {
+> = ({ children, className, label, ...rest }) => {
   return (
-    <label {...rest}>
-      {label}
-
+    <label className={clsx('cron-picker-label', className)} {...rest}>
       {children}
+
+      {label}
     </label>
+  );
+};
+
+export const CronPickerInputWrapper: React.FC<CronPickerInputWrapperProps> = ({
+  children,
+  className,
+  ...rest
+}) => {
+  return (
+    <div className={clsx('cron-picker-input-wrapper', className)} {...rest}>
+      {children}
+    </div>
   );
 };

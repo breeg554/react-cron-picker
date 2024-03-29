@@ -1,24 +1,32 @@
 import React, { useMemo } from 'react';
-import { useCronPicker } from '~components/CronPicker.tsx';
+import { clsx } from 'clsx';
+import { useCronPicker } from './CronPicker.tsx';
 import {
   CronPickerTimeOptionProps,
   CronPickerTimeProps,
-} from '~components/types.ts';
+  CronPickerTimeWrapperProps,
+} from './types.ts';
 
 export const CronPickerTimeOption: React.FC<CronPickerTimeOptionProps> = ({
   value,
   label,
+  className,
   ...rest
 }) => {
   return (
-    <option value={value} {...rest}>
+    <option
+      value={value}
+      className={clsx('cron-picker-time-option', className)}
+      {...rest}
+    >
       {label}
     </option>
   );
 };
 
-export const CronPickerHoursSelector: React.FC<CronPickerTimeProps> = ({
+export const CronPickerHoursSelect: React.FC<CronPickerTimeProps> = ({
   renderOption = CronPickerTimeOption,
+  className,
   ...rest
 }) => {
   const { onDateChange, date } = useCronPicker();
@@ -43,6 +51,7 @@ export const CronPickerHoursSelector: React.FC<CronPickerTimeProps> = ({
       name="hours"
       value={date.toISOString()}
       onChange={handleOnHoursChange}
+      className={clsx('cron-picker-time-select', className)}
       {...rest}
     >
       {dates.map((date) => (
@@ -57,8 +66,9 @@ export const CronPickerHoursSelector: React.FC<CronPickerTimeProps> = ({
   );
 };
 
-export const CronPickerMinutesSelector: React.FC<CronPickerTimeProps> = ({
+export const CronPickerMinutesSelect: React.FC<CronPickerTimeProps> = ({
   renderOption = CronPickerTimeOption,
+  className,
   ...rest
 }) => {
   const { onDateChange, date } = useCronPicker();
@@ -83,6 +93,7 @@ export const CronPickerMinutesSelector: React.FC<CronPickerTimeProps> = ({
       name="minutes"
       value={date.toISOString()}
       onChange={handleOnMinutesChange}
+      className={clsx('cron-picker-time-select', className)}
       {...rest}
     >
       {dates.map((date) => (
@@ -94,5 +105,18 @@ export const CronPickerMinutesSelector: React.FC<CronPickerTimeProps> = ({
         </React.Fragment>
       ))}
     </select>
+  );
+};
+
+export const CronPickerTimeWrapper: React.FC<CronPickerTimeWrapperProps> = ({
+  children,
+  className,
+  ...rest
+}) => {
+  return (
+    <div className={clsx('cron-picker-time-wrapper', className)} {...rest}>
+      <span>at</span>
+      {children}
+    </div>
   );
 };

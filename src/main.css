@@ -1,0 +1,46 @@
+.cron-picker {
+    font-family: sans-serif;
+}
+
+.cron-picker-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cron-picker-input {
+    margin: 0;
+    padding: 0;
+}
+
+.cron-picker-label {
+    display: flex;
+    gap: 6px;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    color: #212121;
+    font-size: 14px;
+}
+
+.cron-picker-label:has(.cron-picker-input:checked) {
+    background-color: rgba(42, 80, 201, 0.15);
+    border: 1px solid rgba(42, 80, 201, 0.5);
+}
+
+.cron-picker-label:hover {
+    background-color: rgba(42, 80, 201, 0.15);
+}
+
+.cron-picker-time-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.cron-picker-time-wrapper span{
+    font-size: 14px;
+}

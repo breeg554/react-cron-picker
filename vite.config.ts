@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import dts from 'vite-plugin-dts';
 
@@ -16,5 +17,17 @@ export default defineConfig({
       external: ['react', 'react-dom'],
     },
   },
-  plugins: [react(), tsconfigPaths(), dts({ exclude: ['src/stories/*'] })],
+  plugins: [
+    react(),
+    tsconfigPaths(),
+    dts({ exclude: ['src/stories/*'] }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'src/main.css',
+          dest: '',
+        },
+      ],
+    }),
+  ],
 });
