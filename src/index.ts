@@ -1,9 +1,11 @@
-import { CronPicker } from './components/CronPicker.tsx';
+import { CronPicker, useCronPicker } from './components/CronPicker.tsx';
 import {
   CronPickerLabel,
   CronPickerInput,
   CronPickerInputWrapper,
-} from './components/CronPicker.components.tsx';
+  CronPickerMonthDayInput,
+  useCronPickerLabel,
+} from './components/CronPickerInputs.tsx';
 import {
   CronPickerTimeOption,
   CronPickerHoursSelect,
@@ -14,7 +16,6 @@ import {
 import type {
   CronPickerTimeProps,
   CronPickerTimeOptionProps,
-  CronPickerContextProps,
   CronPickerInputProps,
   CronPickerLabelProps,
   CronPickerProps,
@@ -32,12 +33,14 @@ export {
   CronPickerLabel,
   CronPickerInputWrapper,
   CronPickerTimeWrapper,
+  useCronPickerLabel,
+  useCronPicker,
+  CronPickerMonthDayInput,
 };
 
 export type {
   CronPickerTimeProps,
   CronPickerTimeOptionProps,
-  CronPickerContextProps,
   CronPickerInputProps,
   CronPickerLabelProps,
   CronPickerProps,

@@ -7,6 +7,7 @@ import {
   CronPickerMinutesSelect,
   CronPickerTimeWrapper,
   CronPickerInputWrapper,
+  CronPickerMonthDayInput,
 } from '../index.ts';
 
 export const CronPickerComponent = () => {
@@ -16,16 +17,26 @@ export const CronPickerComponent = () => {
     <div style={{ minWidth: '200px', fontFamily: 'sans-serif' }}>
       <CronPicker name="cron" value={current} onChange={setCurrent}>
         <CronPickerInputWrapper>
-          <CronPickerLabel label="Only on Friday">
-            <CronPickerInput defaultValue="2 2 * * FRI" />
+          <CronPickerLabel defaultValue="2 2 * * FRI" label="Only on Friday">
+            <CronPickerInput />
           </CronPickerLabel>
 
-          <CronPickerLabel label="On day 1 of the month">
-            <CronPickerInput defaultValue="0 0 1 * *" />
+          <CronPickerLabel
+            defaultValue="0 0 1 * *"
+            label={
+              <>
+                On day <CronPickerMonthDayInput /> of the month
+              </>
+            }
+          >
+            <CronPickerInput />
           </CronPickerLabel>
 
-          <CronPickerLabel label="On the third Friday of the month">
-            <CronPickerInput defaultValue="2 4 * * 5#3" />
+          <CronPickerLabel
+            defaultValue="2 4 * * 5#3"
+            label="On the third Friday of the month"
+          >
+            <CronPickerInput />
           </CronPickerLabel>
         </CronPickerInputWrapper>
 
@@ -35,7 +46,7 @@ export const CronPickerComponent = () => {
         </CronPickerTimeWrapper>
       </CronPicker>
 
-      <p>CURRENT: {current}</p>
+      <p>cron expression: {current}</p>
     </div>
   );
 };

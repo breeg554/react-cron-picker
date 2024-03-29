@@ -11,24 +11,35 @@ export interface CronPickerInputProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     'defaultValue' | 'value' | 'checked' | 'name' | 'type'
-  > {
-  defaultValue: string;
-}
+  > {}
 
 export interface CronPickerLabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement> {
   label: ReactNode;
+  defaultValue: string;
 }
 
 export interface CronPickerInputWrapperProps
   extends HTMLProps<HTMLDivElement> {}
+
+export interface CronPickerMonthDayInputProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'defaultValue' | 'value' | 'max' | 'min' | 'type'
+  > {}
 
 export interface CronPickerContextProps {
   name: string;
   checked: string;
   date: Date;
   onCheck: (value: string) => void;
+  onDayOfMonthChange: (value: string, day: string) => void;
   onDateChange: (date: Date) => void;
+}
+
+export interface CronPickerLabelContextProps {
+  defaultValue: string;
+  isActive: boolean;
 }
 
 export type CronPickerTimeOptionArgs = {

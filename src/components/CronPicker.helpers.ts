@@ -44,3 +44,15 @@ export const updateDateInCron = (expression: string, date: Date) => {
 
   return parts.join(' ');
 };
+
+export const extractDayOfMonthFromCron = (expression: string) => {
+  return expression.split(' ')[2];
+};
+
+export const updateDayOfMonthInCron = (expression: string, day: number) => {
+  const parts = [...expression.split(' ')];
+
+  parts[2] = day.toString();
+
+  return parts.join(' ');
+};
