@@ -1,8 +1,21 @@
 {
   "name": "react-headless-cron",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
+  "author": "breeg554",
   "type": "module",
+  "license": "MIT",
+  "source": "src/index.ts",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -26,6 +39,7 @@
     "prettier": "^3.2.5",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
+    "vite-plugin-dts": "^3.8.1",
     "vite-tsconfig-paths": "^4.3.2"
   },
   "packageManager": "pnpm@8.6.12+sha256.3ed40ffc6cbb00790ab325e9d3ff5517a3ed5b763ec53a411707b1702a411174"
