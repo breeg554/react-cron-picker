@@ -23,20 +23,23 @@ export const CronPicker: React.FC<PropsWithChildren<CronPickerProps>> = ({
   value,
   onChange,
   className,
+  offset: propsOffset = 0,
   ...rest
 }) => {
   if (!isValidCron(value)) throw new Error(`Invalid cron expression: ${value}`);
 
-  const [date, setDate] = useState(extractDateFromCron(value));
+  const offset = parseFloat(Number(propsOffset / 60).toFixed(0));
+
+  const [date, setDate] = useState(extractDateFromCron(value, { offset }));
   const [checked, setChecked] = useState(value);
 
   const onCheck = useCallback(
     (value: string) => {
       setChecked(value);
 
-      onChange?.(updateDateInCron(value, date));
+      onChange?.(updateDateInCron(value, date, { offset }));
     },
-    [value, date],
+    [value, date, offset],
   );
 
   const onDayOfMonthChange = useCallback(
@@ -44,19 +47,22 @@ export const CronPicker: React.FC<PropsWithChildren<CronPickerProps>> = ({
       setChecked(value);
 
       onChange?.(
-        updateDayOfMonthInCron(updateDateInCron(value, date), Number(day)),
+        updateDayOfMonthInCron(
+          updateDateInCron(value, date, { offset }),
+          Number(day),
+        ),
       );
     },
-    [date],
+    [date, offset],
   );
 
   const onDateChange = useCallback(
     (date: Date) => {
       setDate(date);
 
-      onChange?.(updateDateInCron(value, date));
+      onChange?.(updateDateInCron(value, date, { offset }));
     },
-    [value],
+    [value, offset],
   );
 
   const contextValue = useMemo(

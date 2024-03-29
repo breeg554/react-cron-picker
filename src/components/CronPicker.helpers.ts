@@ -22,24 +22,33 @@ export const isValidCron = (expression: string) => {
   return true;
 };
 
-export const extractDateFromCron = (expression: string) => {
+export const extractDateFromCron = (
+  expression: string,
+  args = { offset: 0 },
+) => {
   const hoursString = expression.split(' ')[1];
   const minutesString = expression.split(' ')[0];
 
-  const hours = parseInt(hoursString, 10);
+  const hours = parseInt(hoursString, 10) - args.offset;
   const minutes = parseInt(minutesString, 10);
 
   const date = new Date();
 
-  date.setHours(hours, minutes, 0, 0);
+  date.setHours(hours < 0 ? hours + 24 : hours, minutes, 0, 0);
 
   return date;
 };
 
-export const updateDateInCron = (expression: string, date: Date) => {
+export const updateDateInCron = (
+  expression: string,
+  date: Date,
+  args = { offset: 0 },
+) => {
   const parts = [...expression.split(' ')];
 
-  parts[1] = date.getHours().toString();
+  const hours = date.getHours() + args.offset + 24;
+
+  parts[1] = (hours % 24).toString();
   parts[0] = date.getMinutes().toString();
 
   return parts.join(' ');

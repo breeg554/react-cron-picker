@@ -5,6 +5,7 @@ export interface CronPickerProps
   name: string;
   value: string;
   onChange?: (cron: string) => void;
+  offset?: number;
 }
 
 export interface CronPickerInputProps
