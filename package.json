@@ -1,7 +1,7 @@
 {
   "name": "react-cron-picker",
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "breeg554",
   "description": "A comprehensive React component for selecting and manipulating cron expressions with a user-friendly interface.",
   "repository": {

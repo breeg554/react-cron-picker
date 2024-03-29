@@ -58,6 +58,8 @@ export const CronPickerComponent = () => {
 };
 ```
 
+[See example with tailwind](https://stackblitz.com/edit/vitejs-vite-pehorh?file=package.json,tailwind.config.js,src%2Findex.css,src%2FApp.tsx,src%2Fmain.tsx&terminal=dev)
+
 ## TODO
 
 - [ ] handling value ranges (np. 1-2)
