@@ -13,7 +13,7 @@ export const CronPickerComponent = () => {
   const [current, setCurrent] = useState('2 4 * * 5#3');
 
   return (
-    <div style={{ minWidth: '200px' }}>
+    <div style={{ minWidth: '200px', fontFamily: 'sans-serif' }}>
       <CronPicker name="cron" value={current} onChange={setCurrent}>
         <CronPickerInputWrapper>
           <CronPickerLabel label="Only on Friday">
