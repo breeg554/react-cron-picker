@@ -10,7 +10,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       formats: ['cjs', 'es'],
-      name: '',
+      name: 'react-cron-picker',
       fileName: 'index',
     },
     rollupOptions: {

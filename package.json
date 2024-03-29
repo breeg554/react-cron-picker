@@ -1,10 +1,19 @@
 {
-  "name": "react-headless-cron",
+  "name": "react-cron-picker",
   "private": false,
   "version": "0.0.0",
   "author": "breeg554",
-  "type": "module",
+  "description": "A comprehensive React component for selecting and manipulating cron expressions with a user-friendly interface.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/breeg554/react-cron-picker"
+  },
+  "homepage": "https://github.com/breeg554/react-cron-picker#readme",
+  "bugs": {
+    "url": "https://github.com/breeg554/react-cron-picker/issues"
+  },
   "license": "MIT",
+  "type": "module",
   "source": "src/index.ts",
   "files": [
     "dist"
