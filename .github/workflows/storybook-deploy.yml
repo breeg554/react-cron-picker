@@ -1,0 +1,40 @@
+name: Deploy Storybook to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install packages
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build
+        run: pnpm run build-storybook
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: "./storybook-static"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
