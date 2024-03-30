@@ -32,10 +32,13 @@ export interface CronPickerMonthDayInputProps
 export interface CronPickerContextProps {
   name: string;
   checked: string;
-  date: Date;
+  // date: Date;
+  hours: string;
+  minutes: string;
   onCheck: (value: string) => void;
   onDayOfMonthChange: (value: string, day: string) => void;
-  onDateChange: (date: Date) => void;
+  onHoursChange: (hours: string) => void;
+  onMinutesChange: (minutes: string) => void;
 }
 
 export interface CronPickerLabelContextProps {

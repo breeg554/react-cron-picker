@@ -29,36 +29,34 @@ export const CronPickerHoursSelect: React.FC<CronPickerTimeProps> = ({
   className,
   ...rest
 }) => {
-  const { onDateChange, date } = useCronPicker();
+  const { onHoursChange, hours } = useCronPicker();
 
   const handleOnHoursChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onDateChange(new Date(e.target.value));
+    onHoursChange(e.target.value);
   };
 
-  const dates = useMemo(() => {
-    const dates: Date[] = [];
+  const selectHours = useMemo(() => {
+    const values: string[] = [];
     for (let i = 0; i < 24; i++) {
-      const hourDate = new Date();
-      hourDate.setHours(i, date.getMinutes(), 0, 0);
-      dates.push(hourDate);
+      values.push(`${i}`);
     }
 
-    return dates;
-  }, [date]);
+    return values;
+  }, []);
 
   return (
     <select
       name="hours"
-      value={date.toISOString()}
+      value={hours}
       onChange={handleOnHoursChange}
       className={clsx('cron-picker-time-select', className)}
       {...rest}
     >
-      {dates.map((date) => (
-        <React.Fragment key={date.getTime()}>
+      {selectHours.map((hour) => (
+        <React.Fragment key={hour}>
           {renderOption({
-            value: date.toISOString(),
-            label: date.getHours().toString().padStart(2, '0'),
+            value: hour,
+            label: hour.padStart(2, '0'),
           })}
         </React.Fragment>
       ))}
@@ -71,36 +69,34 @@ export const CronPickerMinutesSelect: React.FC<CronPickerTimeProps> = ({
   className,
   ...rest
 }) => {
-  const { onDateChange, date } = useCronPicker();
+  const { onMinutesChange, minutes } = useCronPicker();
 
   const handleOnMinutesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onDateChange(new Date(e.target.value));
+    onMinutesChange(e.target.value);
   };
 
-  const dates = useMemo(() => {
-    const dates: Date[] = [];
+  const selectMinutes = useMemo(() => {
+    const values: string[] = [];
     for (let i = 0; i < 60; i++) {
-      const hourDate = new Date();
-      hourDate.setHours(date.getHours(), i, 0, 0);
-      dates.push(hourDate);
+      values.push(`${i}`);
     }
 
-    return dates;
-  }, [date]);
+    return values;
+  }, []);
 
   return (
     <select
       name="minutes"
-      value={date.toISOString()}
+      value={minutes}
       onChange={handleOnMinutesChange}
       className={clsx('cron-picker-time-select', className)}
       {...rest}
     >
-      {dates.map((date) => (
-        <React.Fragment key={date.getTime()}>
+      {selectMinutes.map((minute) => (
+        <React.Fragment key={minute}>
           {renderOption({
-            value: date.toISOString(),
-            label: date.getMinutes().toString().padStart(2, '0'),
+            value: minute,
+            label: minute.padStart(2, '0'),
           })}
         </React.Fragment>
       ))}
