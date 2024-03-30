@@ -51,7 +51,10 @@ const CronPickerComponent = () => {
         </CronPickerTimeWrapper>
       </CronPicker>
 
-      <p>cron expression: {current}</p>
+      <p>
+        cron expression (timezone offset = {new Date().getTimezoneOffset() / 60}
+        ): {current}
+      </p>
     </>
   );
 };

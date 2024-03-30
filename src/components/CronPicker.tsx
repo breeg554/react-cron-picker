@@ -24,7 +24,7 @@ export const CronPicker: React.FC<PropsWithChildren<CronPickerProps>> = ({
   const [checked, setChecked] = useState(value);
 
   const offset = useMemo(() => {
-    return parseFloat(Number(propsOffset / 60).toFixed(0));
+    return parseInt(Number(propsOffset / 60).toFixed(0));
   }, [propsOffset]);
 
   const onCheck = useCallback(

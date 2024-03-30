@@ -24,7 +24,7 @@ describe('CronExpression', () => {
     ).toBe('2 * 5 * *');
   });
 
-  test('should return hours witho offset', () => {
+  test('should return hours with offset', () => {
     expect(CronExpression.fromExpression('0 3 * * *').hoursWithOffset).toBe(
       '3',
     );
