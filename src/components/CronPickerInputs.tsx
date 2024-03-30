@@ -60,7 +60,7 @@ export const CronPickerMonthDayInput: React.FC<
   const { onDayOfMonthChange } = useCronPicker();
   const { defaultValue, isActive } = useCronPickerLabel();
   const [value, setValue] = useState(
-    CronExpression.fromExpression(defaultValue).value,
+    CronExpression.fromExpression(defaultValue).dayOfMonth,
   );
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +73,7 @@ export const CronPickerMonthDayInput: React.FC<
   };
 
   useEffect(() => {
-    setValue(CronExpression.fromExpression(defaultValue).value);
+    setValue(CronExpression.fromExpression(defaultValue).dayOfMonth);
   }, [isActive]);
 
   useEffect(() => {
