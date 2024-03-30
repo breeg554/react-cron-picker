@@ -1,3 +1,13 @@
+// @todo handle better validation
+const MINUTE_PATTERN = /^(?:\*|[0-5]?\d)$/;
+const HOUR_PATTERN = /^(?:\*|[01]?\d|2[0-3])$/;
+const MONTH_PATTERN =
+  /^(?:\*|0?[1-9]|1[0-2]|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)$/;
+const DAY_OF_WEEK_PATTERN =
+  /^(?:\*|[0-6]|SUN|MON|TUE|WED|THU|FRI|SAT|[0-6]L|[0-6]#[1-5])$/;
+const DAY_OF_MONTH_PATTERN =
+  /^(?:\*|0?[1-9]|[12]\d|3[01]|[1-9]?[0-9]W?|LW?|W)$/;
+
 type CronTouple = [string, string, string, string, string];
 
 export class CronExpression {
@@ -10,75 +20,34 @@ export class CronExpression {
     private timeOffset = 0,
   ) {}
 
-  public static fromExpression(expression: string, args = { offset: 0 }) {
+  public static fromExpression(
+    expression: string,
+    args?: {
+      offset?: number;
+      hours?: string;
+      minutes?: string;
+      dayOfMonth?: string;
+      dayOfWeek?: string;
+      month?: string;
+    },
+  ) {
+    if (!CronExpression.isValid(expression)) {
+      throw new Error(`Invalid cron expression: ${expression}`);
+    }
+
     const parts = [...expression.split(' ')];
 
-    if (parts.length != 5) {
-      throw new Error(`Invalid cron length: ${expression}`);
+    if (args?.minutes) parts[0] = args.minutes;
+    if (args?.hours) parts[1] = args.hours;
+    if (args?.dayOfMonth) parts[2] = args.dayOfMonth;
+    if (args?.month) parts[3] = args.month;
+    if (args?.dayOfWeek) parts[4] = args.dayOfWeek;
+
+    if (!CronExpression.isValid(parts.join(' '))) {
+      throw new Error(`Invalid cron expression: ${parts.join(' ')}`);
     }
 
-    return new CronExpression(...(parts as CronTouple), args.offset);
-  }
-
-  public static fromDayOfMonth(
-    expression: string,
-    dayOfMonth: string,
-    args = { offset: 0 },
-  ) {
-    const parts: string[] = [...expression.split(' ')];
-
-    if (parts.length != 5) {
-      throw new Error(`Invalid cron length: ${expression}`);
-    }
-
-    parts[2] = dayOfMonth;
-
-    return new CronExpression(...(parts as CronTouple), args.offset);
-  }
-
-  public static fromHours(
-    expression: string,
-    hours: string,
-    args = { offset: 0 },
-  ) {
-    const parts: string[] = [...expression.split(' ')];
-
-    if (parts.length != 5) {
-      throw new Error(`Invalid cron length: ${expression}`);
-    }
-
-    parts[1] = hours;
-
-    return new CronExpression(...(parts as CronTouple), args.offset);
-  }
-
-  public static fromMinutes(
-    expression: string,
-    minutes: string,
-    args = { offset: 0 },
-  ) {
-    const parts: string[] = [...expression.split(' ')];
-
-    if (parts.length != 5) {
-      throw new Error(`Invalid cron length: ${expression}`);
-    }
-
-    parts[0] = minutes;
-
-    return new CronExpression(...(parts as CronTouple), args.offset);
-  }
-
-  public static fromDate(expression: string, date: Date, args = { offset: 0 }) {
-    const parts: string[] = [...expression.split(' ')];
-
-    if (parts.length != 5) {
-      throw new Error(`Invalid cron length: ${expression}`);
-    }
-
-    parts[1] = date.getUTCHours().toString();
-    parts[0] = date.getUTCMinutes().toString();
-
-    return new CronExpression(...(parts as CronTouple), args.offset);
+    return new CronExpression(...(parts as CronTouple), args?.offset ?? 0);
   }
 
   setDayOfMonth(dayOfMonth: string) {
@@ -96,7 +65,10 @@ export class CronExpression {
   }
 
   get hoursMinusOffset() {
-    return this.hours;
+    if (isNaN(parseInt(this.hours))) return this.hours;
+
+    const hours = parseInt(this.hours) - this.timeOffset;
+    return (hours < 0 ? hours + 24 : hours).toString();
   }
 
   get minutes() {
@@ -115,5 +87,24 @@ export class CronExpression {
 
   get value() {
     return `${this.minutes} ${this.hours} ${this.dayOfMonth} ${this.month} ${this.dayOfWeek}`;
+  }
+
+  get valueWithOffset() {
+    return `${this.minutes} ${this.hoursWithOffset} ${this.dayOfMonth} ${this.month} ${this.dayOfWeek}`;
+  }
+
+  static isValid(expression: string) {
+    const parts = [...expression.split(' ')];
+
+    if (parts.length != 5) {
+      throw new Error(`Invalid cron length: ${expression}`);
+    }
+    if (!MINUTE_PATTERN.test(parts[0])) return false;
+    if (!HOUR_PATTERN.test(parts[1])) return false;
+    if (!DAY_OF_MONTH_PATTERN.test(parts[2])) return false;
+    if (!MONTH_PATTERN.test(parts[3])) return false;
+    if (!DAY_OF_WEEK_PATTERN.test(parts[4])) return false;
+
+    return true;
   }
 }

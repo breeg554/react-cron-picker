@@ -7,8 +7,8 @@ import {
   CronPickerLabelProps,
   CronPickerMonthDayInputProps,
 } from './types.ts';
-import { extractDayOfMonthFromCron } from './CronPicker.helpers.ts';
 import { useCronPicker } from './CronPicker.tsx';
+import { CronExpression } from '~utils/CronExpression.ts';
 
 const CronPickerInputContext = React.createContext<CronPickerLabelContextProps>(
   undefined!,
@@ -59,7 +59,9 @@ export const CronPickerMonthDayInput: React.FC<
 > = ({ onChange, className, disabled, ...rest }) => {
   const { onDayOfMonthChange } = useCronPicker();
   const { defaultValue, isActive } = useCronPickerLabel();
-  const [value, setValue] = useState(extractDayOfMonthFromCron(defaultValue));
+  const [value, setValue] = useState(
+    CronExpression.fromExpression(defaultValue).value,
+  );
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(e.target.valueAsNumber) > DAY_OF_MONTH_MAX) return;
@@ -71,7 +73,7 @@ export const CronPickerMonthDayInput: React.FC<
   };
 
   useEffect(() => {
-    setValue(extractDayOfMonthFromCron(defaultValue));
+    setValue(CronExpression.fromExpression(defaultValue).value);
   }, [isActive]);
 
   useEffect(() => {
