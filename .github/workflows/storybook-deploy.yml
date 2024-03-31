@@ -1,7 +1,10 @@
 name: Deploy Storybook to GitHub Pages
 
 on:
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["Compile and Test"]
+    types:
+      - completed
 
 permissions:
   pages: write
@@ -13,6 +16,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
