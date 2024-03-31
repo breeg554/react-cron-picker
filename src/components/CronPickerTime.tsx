@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { clsx } from 'clsx';
 import { useCronPicker } from './CronPicker.tsx';
 import {
+  CronPickerTimeOptionArgs,
   CronPickerTimeOptionProps,
   CronPickerTimeProps,
   CronPickerTimeWrapperProps,
@@ -27,6 +28,7 @@ export const CronPickerTimeOption: React.FC<CronPickerTimeOptionProps> = ({
 export const CronPickerHoursSelect: React.FC<CronPickerTimeProps> = ({
   renderOption = CronPickerTimeOption,
   className,
+  withAny = false,
   ...rest
 }) => {
   const { onHoursChange, hours } = useCronPicker();
@@ -36,29 +38,30 @@ export const CronPickerHoursSelect: React.FC<CronPickerTimeProps> = ({
   };
 
   const selectHours = useMemo(() => {
-    const values: string[] = [];
+    const values: CronPickerTimeOptionArgs[] = [];
+
+    if (withAny) {
+      values.push({ value: '*', label: 'Any' });
+    }
+
     for (let i = 0; i < 24; i++) {
-      values.push(`${i}`);
+      values.push({ value: `${i}`, label: `${i}`.padStart(2, '0') });
     }
 
     return values;
-  }, []);
+  }, [withAny]);
 
   return (
     <select
       name="hours"
+      title="hours"
       value={hours}
       onChange={handleOnHoursChange}
       className={clsx('cron-picker-time-select', className)}
       {...rest}
     >
       {selectHours.map((hour) => (
-        <React.Fragment key={hour}>
-          {renderOption({
-            value: hour,
-            label: hour.padStart(2, '0'),
-          })}
-        </React.Fragment>
+        <React.Fragment key={hour.value}>{renderOption(hour)}</React.Fragment>
       ))}
     </select>
   );
@@ -67,6 +70,7 @@ export const CronPickerHoursSelect: React.FC<CronPickerTimeProps> = ({
 export const CronPickerMinutesSelect: React.FC<CronPickerTimeProps> = ({
   renderOption = CronPickerTimeOption,
   className,
+  withAny = false,
   ...rest
 }) => {
   const { onMinutesChange, minutes } = useCronPicker();
@@ -76,28 +80,31 @@ export const CronPickerMinutesSelect: React.FC<CronPickerTimeProps> = ({
   };
 
   const selectMinutes = useMemo(() => {
-    const values: string[] = [];
+    const values: CronPickerTimeOptionArgs[] = [];
+
+    if (withAny) {
+      values.push({ value: '*', label: 'Any' });
+    }
+
     for (let i = 0; i < 60; i++) {
-      values.push(`${i}`);
+      values.push({ value: `${i}`, label: `${i}`.padStart(2, '0') });
     }
 
     return values;
-  }, []);
+  }, [withAny]);
 
   return (
     <select
       name="minutes"
+      title="minutes"
       value={minutes}
       onChange={handleOnMinutesChange}
       className={clsx('cron-picker-time-select', className)}
       {...rest}
     >
       {selectMinutes.map((minute) => (
-        <React.Fragment key={minute}>
-          {renderOption({
-            value: minute,
-            label: minute.padStart(2, '0'),
-          })}
+        <React.Fragment key={minute.value}>
+          {renderOption(minute)}
         </React.Fragment>
       ))}
     </select>

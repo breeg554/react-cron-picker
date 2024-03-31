@@ -66,6 +66,7 @@ export interface CronPickerTimeProps
     React.SelectHTMLAttributes<HTMLSelectElement>,
     'name' | 'value' | 'onChange'
   > {
+  withAny?: boolean;
   renderOption?: (args: CronPickerTimeOptionArgs) => ReactNode;
 }
 
