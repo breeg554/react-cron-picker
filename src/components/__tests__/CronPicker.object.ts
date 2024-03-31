@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { RadioHandler } from '~tests/handlers/RadioHandler';
 import { RenderResult, render } from '~tests/test-utils';
 
 export class CronPickerObject {
@@ -10,5 +11,13 @@ export class CronPickerObject {
 
   get container() {
     return this.wrapper;
+  }
+
+  get inputs() {
+    return this.container.getAllByRole('radio');
+  }
+
+  getOption(name: string) {
+    return RadioHandler.fromRole(name, this.container);
   }
 }

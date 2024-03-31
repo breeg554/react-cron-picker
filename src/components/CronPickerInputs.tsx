@@ -43,6 +43,7 @@ export const CronPickerInput: React.FC<CronPickerInputProps> = ({
     <input
       type="radio"
       name={name}
+      data-active={isActive}
       checked={isActive}
       onChange={handleOnCheck}
       className={clsx('cron-picker-input', className)}
