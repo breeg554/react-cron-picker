@@ -13,35 +13,23 @@ import {
 } from '~components/CronPickerTime.tsx';
 
 const CronPickerComponent = () => {
-  const [current, setCurrent] = useState('* 4 * * 5#3');
-
   return (
-    <>
-      <CronPicker name="cron" value={current} onChange={setCurrent}>
-        <CronPickerInputWrapper>
-          <CronPickerLabel
-            defaultValue="* 4 * * 5#3"
-            label="Custom expresisons"
-          >
-            <CronPickerInput />
-          </CronPickerLabel>
+    <CronPicker name="cron" defaultValue="20 * * * 5#3">
+      <CronPickerInputWrapper>
+        <CronPickerLabel defaultValue="* 4 * * 5#3" label="* 4 * * 5#3">
+          <CronPickerInput />
+        </CronPickerLabel>
 
-          <CronPickerLabel
-            defaultValue="20 * * * 5#3"
-            label="Custom expresisons"
-          >
-            <CronPickerInput />
-          </CronPickerLabel>
-        </CronPickerInputWrapper>
+        <CronPickerLabel defaultValue="20 * * * 5#3" label="20 * * * 5#3">
+          <CronPickerInput />
+        </CronPickerLabel>
+      </CronPickerInputWrapper>
 
-        <CronPickerTimeWrapper>
-          <CronPickerHoursSelect />
-          <CronPickerMinutesSelect />
-        </CronPickerTimeWrapper>
-      </CronPicker>
-
-      <p>cron expression: {current}</p>
-    </>
+      <CronPickerTimeWrapper>
+        <CronPickerHoursSelect />
+        <CronPickerMinutesSelect />
+      </CronPickerTimeWrapper>
+    </CronPicker>
   );
 };
 

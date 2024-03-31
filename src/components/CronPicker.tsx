@@ -1,12 +1,14 @@
 import React, {
   PropsWithChildren,
   useCallback,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { clsx } from 'clsx';
-import { CronPickerContextProps, CronPickerProps } from './types.ts';
 import { CronExpression } from '~utils/CronExpression.ts';
+import { CronPickerContextProps, CronPickerProps } from './types.ts';
 
 const CronPickerContext = React.createContext<CronPickerContextProps>(
   undefined!,
@@ -15,41 +17,40 @@ const CronPickerContext = React.createContext<CronPickerContextProps>(
 export const CronPicker: React.FC<PropsWithChildren<CronPickerProps>> = ({
   children,
   name,
-  value,
   onChange,
   className,
+  value: propsValue,
+  defaultValue: propsDefaultValue,
   offset: propsOffset = 0,
   ...rest
 }) => {
-  const [checked, setChecked] = useState(value);
+  const isFirstRender = useRef(false);
+  const [value, setValue] = useState(propsValue ?? propsDefaultValue ?? '');
+  const [checked, setChecked] = useState(propsValue ?? propsDefaultValue ?? '');
 
   const offset = useMemo(() => {
     return parseInt(Number(propsOffset / 60).toFixed(0));
   }, [propsOffset]);
 
   const onCheck = useCallback(
-    (value: string) => {
-      setChecked(value);
-
-      onChange?.(CronExpression.fromExpression(value).value);
+    (defaultValue: string) => {
+      setChecked(defaultValue);
+      setValue(CronExpression.fromExpression(defaultValue).value);
     },
     [value, offset],
   );
 
   const onDayOfMonthChange = useCallback(
-    (value: string, day: string) => {
-      setChecked(value);
-
-      onChange?.(
-        CronExpression.fromExpression(value, { dayOfMonth: day }).value,
-      );
+    (defaultValue: string, day: string) => {
+      setChecked(defaultValue);
+      setValue(CronExpression.fromExpression(value, { dayOfMonth: day }).value);
     },
     [value, offset],
   );
 
   const onHoursChange = useCallback(
     (hours: string) => {
-      onChange?.(
+      setValue(
         CronExpression.fromExpression(value, { hours, offset }).valueWithOffset,
       );
     },
@@ -58,10 +59,18 @@ export const CronPicker: React.FC<PropsWithChildren<CronPickerProps>> = ({
 
   const onMinutesChange = useCallback(
     (minutes: string) => {
-      onChange?.(CronExpression.fromExpression(value, { minutes }).value);
+      setValue(CronExpression.fromExpression(value, { minutes }).value);
     },
     [value, offset],
   );
+
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      isFirstRender.current = true;
+    } else {
+      onChange?.(CronExpression.fromExpression(value).value);
+    }
+  }, [value]);
 
   const contextValue = useMemo(
     () => ({
