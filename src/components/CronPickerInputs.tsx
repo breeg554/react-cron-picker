@@ -31,8 +31,8 @@ export const CronPickerInput: React.FC<CronPickerInputProps> = ({
   className,
   ...rest
 }) => {
-  const { name, onCheck } = useCronPicker();
   const { defaultValue, isActive } = useCronPickerLabel();
+  const { name, onCheck } = useCronPicker();
 
   const handleOnCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCheck(defaultValue);

@@ -2,7 +2,10 @@ import React, { HTMLProps, ReactNode } from 'react';
 import { RequireAtLeastOne } from '~utils/ts-utils';
 
 interface CronPickerBaseProps
-  extends Omit<React.HTMLProps<HTMLDivElement>, 'onChange' | 'name'> {
+  extends Omit<
+    React.HTMLProps<HTMLDivElement>,
+    'onChange' | 'name' | 'default' | 'defaultChecked'
+  > {
   onChange?: (cron: string) => void;
   offset?: number;
   value?: string;
