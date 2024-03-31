@@ -1,12 +1,19 @@
 import React, { HTMLProps, ReactNode } from 'react';
+import { RequireAtLeastOne } from '~utils/ts-utils';
 
-export interface CronPickerProps
+interface CronPickerBaseProps
   extends Omit<React.HTMLProps<HTMLDivElement>, 'onChange' | 'name'> {
-  name: string;
-  value: string;
   onChange?: (cron: string) => void;
   offset?: number;
+  value?: string;
+  defaultValue?: string;
+  name: string;
 }
+
+export type CronPickerProps = RequireAtLeastOne<
+  CronPickerBaseProps,
+  'value' | 'defaultValue'
+>;
 
 export interface CronPickerInputProps
   extends Omit<
