@@ -6,7 +6,7 @@ const HOUR_PATTERN = /^(?:\*|[01]?\d|2[0-3])$/;
 const MONTH_PATTERN =
   /^(?:\*|0?[1-9]|1[0-2]|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)$/;
 const DAY_OF_WEEK_PATTERN =
-  /^(?:\*|[0-6]|SUN|MON|TUE|WED|THU|FRI|SAT|[0-6](?:,\d{2})*(?:\/\d+)?|#[1-5])$/;
+  /^(?:\*|[0-6]|SUN|MON|TUE|WED|THU|FRI|SAT|[0-6]L|[0-6]#[1-5])$/;
 const DAY_OF_MONTH_PATTERN =
   /^(?:\*|0?[1-9]|[12]\d|3[01]|[0-9]{2}(?:,\d{2})*(?:\/\d+)?|LW?|W)$/;
 
