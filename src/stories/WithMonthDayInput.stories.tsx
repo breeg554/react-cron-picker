@@ -41,7 +41,7 @@ const CronPickerComponent = () => {
         </CronPickerInputWrapper>
 
         <CronPickerTimeWrapper>
-          <CronPickerHoursSelect />
+          <CronPickerHoursSelect withAny />
           <CronPickerMinutesSelect />
         </CronPickerTimeWrapper>
       </CronPicker>

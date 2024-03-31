@@ -7,11 +7,6 @@ import {
   CronPickerLabel,
   CronPickerMonthDayInput,
 } from '~components/CronPickerInputs.tsx';
-import {
-  CronPickerHoursSelect,
-  CronPickerMinutesSelect,
-  CronPickerTimeWrapper,
-} from '~components/CronPickerTime.tsx';
 import '../main.css';
 
 const CronPickerComponent = () => {
@@ -44,11 +39,6 @@ const CronPickerComponent = () => {
             <CronPickerInput />
           </CronPickerLabel>
         </CronPickerInputWrapper>
-
-        <CronPickerTimeWrapper>
-          <CronPickerHoursSelect />
-          <CronPickerMinutesSelect />
-        </CronPickerTimeWrapper>
       </CronPicker>
 
       <p>

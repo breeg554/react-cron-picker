@@ -73,7 +73,12 @@ export const CronPickerMonthDayInput: React.FC<
     ) {
       return setValue(`${DAY_OF_MONTH_MIN}`);
     }
-    if (e.target.valueAsNumber > DAY_OF_MONTH_MAX) return;
+    if (
+      e.target.valueAsNumber > DAY_OF_MONTH_MAX ||
+      e.target.value.length > 2
+    ) {
+      return;
+    }
 
     setValue(e.target.value);
   };
