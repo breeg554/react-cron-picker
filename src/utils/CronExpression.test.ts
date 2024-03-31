@@ -1,5 +1,6 @@
 import { test, describe, expect } from 'vitest';
 import { CronExpression } from '~utils/CronExpression';
+import { InvalidCronExpression } from './errors';
 
 describe('CronExpression', () => {
   const expression = '* * * * *';
@@ -33,7 +34,7 @@ describe('CronExpression', () => {
     );
     expect(
       () => CronExpression.fromExpression('0 */5 * * *').hoursWithOffset,
-    ).toThrowError(/Invalid cron expression:/i);
+    ).toThrowError(InvalidCronExpression);
     expect(
       CronExpression.fromExpression('0 3 * * *', { offset: 2 }).hoursWithOffset,
     ).toBe('5');
