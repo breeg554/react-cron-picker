@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { clsx } from 'clsx';
+import { CronExpression } from '~utils/CronExpression.ts';
 import {
   CronPickerInputProps,
   CronPickerInputWrapperProps,
@@ -8,7 +9,6 @@ import {
   CronPickerMonthDayInputProps,
 } from './types.ts';
 import { useCronPicker } from './CronPicker.tsx';
-import { CronExpression } from '~utils/CronExpression.ts';
 
 const CronPickerInputContext = React.createContext<CronPickerLabelContextProps>(
   undefined!,
@@ -65,12 +65,17 @@ export const CronPickerMonthDayInput: React.FC<
   );
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (Number(e.target.valueAsNumber) > DAY_OF_MONTH_MAX) return;
-    if (Number(e.target.valueAsNumber) < DAY_OF_MONTH_MIN) return;
+    onChange?.(e);
+
+    if (
+      isNaN(e.target.valueAsNumber) ||
+      e.target.valueAsNumber < DAY_OF_MONTH_MIN
+    ) {
+      return setValue(`${DAY_OF_MONTH_MIN}`);
+    }
+    if (e.target.valueAsNumber > DAY_OF_MONTH_MAX) return;
 
     setValue(e.target.value);
-
-    onChange?.(e);
   };
 
   useEffect(() => {
@@ -85,6 +90,7 @@ export const CronPickerMonthDayInput: React.FC<
   return (
     <input
       type="number"
+      title="Months day input"
       className={clsx('cron-picker-month-day-input', className)}
       disabled={!isActive || disabled}
       max={DAY_OF_MONTH_MAX}

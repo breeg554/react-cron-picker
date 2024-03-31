@@ -6,7 +6,11 @@ import {
   CronPickerHoursSelect,
   CronPickerMinutesSelect,
 } from '~components/CronPickerTime';
-import { CronPickerInput, CronPickerLabel } from '~components/CronPickerInputs';
+import {
+  CronPickerInput,
+  CronPickerLabel,
+  CronPickerMonthDayInput,
+} from '~components/CronPickerInputs';
 
 describe(CronPicker.name, () => {
   describe('simple', () => {
@@ -236,6 +240,99 @@ describe(CronPicker.name, () => {
 
       expect(picker.minutesSelect.value).toBe('59');
       expect(picker.hoursSelect.value).toBe('22');
+    });
+  });
+
+  describe('with months day input', () => {
+    const onChangeMock = vi.fn();
+
+    afterEach(() => {
+      onChangeMock.mockReset();
+    });
+
+    test('should enable month day input when option selected', () => {
+      const picker = CronPickerObject.render(
+        <CronPicker name="cron" value="* * * * *">
+          <CronPickerLabel
+            defaultValue="* * 1 * *"
+            label={
+              <>
+                on day <CronPickerMonthDayInput /> of the month
+              </>
+            }
+          >
+            <CronPickerInput />
+          </CronPickerLabel>
+
+          <CronPickerLabel defaultValue="* * * * *" label="2">
+            <CronPickerInput />
+          </CronPickerLabel>
+        </CronPicker>,
+      );
+      const monthDayInput = picker.getMonthDayInput(/of the month/i);
+
+      expect(monthDayInput.isDisabled).toBe(true);
+
+      picker.getOption(/of the month/i).click();
+
+      expect(monthDayInput.isDisabled).toBe(false);
+    });
+
+    test('should update cron month day', () => {
+      const picker = CronPickerObject.render(
+        <CronPicker name="cron" value="* * 1 * *" onChange={onChangeMock}>
+          <CronPickerLabel
+            defaultValue="* * 1 * *"
+            label={
+              <>
+                on day <CronPickerMonthDayInput /> of the month
+              </>
+            }
+          >
+            <CronPickerInput />
+          </CronPickerLabel>
+        </CronPicker>,
+      );
+      const monthDayInput = picker.getMonthDayInput(/of the month/i);
+      expect(monthDayInput.value).toBe('1');
+
+      monthDayInput.setValue('10');
+
+      expect(monthDayInput.value).toBe('10');
+      expect(onChangeMock).toHaveBeenCalledWith('* * 10 * *');
+    });
+
+    test('should doesnt allow to insert incorrect month day value', () => {
+      const picker = CronPickerObject.render(
+        <CronPicker name="cron" value="* * 1 * *" onChange={onChangeMock}>
+          <CronPickerLabel
+            defaultValue="* * 1 * *"
+            label={
+              <>
+                on day <CronPickerMonthDayInput /> of the month
+              </>
+            }
+          >
+            <CronPickerInput />
+          </CronPickerLabel>
+        </CronPicker>,
+      );
+      const monthDayInput = picker.getMonthDayInput(/of the month/i);
+
+      monthDayInput.setValue('32');
+      expect(monthDayInput.value).toBe('1');
+
+      monthDayInput.setValue('0');
+      expect(monthDayInput.value).toBe('1');
+
+      monthDayInput.setValue('undefined');
+      expect(monthDayInput.value).toBe('1');
+
+      monthDayInput.setValue('000');
+      expect(monthDayInput.value).toBe('1');
+
+      monthDayInput.setValue('');
+      expect(monthDayInput.value).toBe('1');
     });
   });
 
